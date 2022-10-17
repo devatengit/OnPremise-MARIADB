@@ -1,0 +1,19 @@
+ version: '3.8'
+ networks:
+  devaten-mariadb-agent:
+    name: devaten-mariadb-agent
+    
+ services:
+ 
+   onpremise-mariadbagent-container:
+     image: devaten/on-premises-mariadb-agent
+     container_name: onpremise-mariadbagent-container
+     restart: unless-stopped
+     ports:
+       - "8113:8113"
+     environment:
+       - spring.activemq.broker-url=tcp://127.0.0.1:61616
+     volumes:
+       - ./h2:/opt/h2-data:rw
+     networks:
+       - devaten-mariadb-agent
